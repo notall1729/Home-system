@@ -8,11 +8,12 @@ public class Thermostat extends Device{
             throw new InvalidCommandException("invalid value");
         }
         this.temperature = temperature;
+        System.out.println("device update successfully");
     }
 
-    private boolean setProperty(String property, int value){
+    private void setProperty(String property, String value){
         if(property.equals("temperature")){
-            setTemperature(value);
+            setTemperature(Integer.parseInt(value));
         }
 
         if (property.equals("brightness")){
@@ -20,7 +21,18 @@ public class Thermostat extends Device{
         }
 
         if (property.equals("status")){
-            setStatus(value);
+            int status;
+            if(value.equals("on")){
+                status = 1;
+            }
+
+            else if (value.equals("off")){
+                status = 0;
+            }
+
+            else status = 2;
+
+            setStatus(status);
         }
     }
 }
