@@ -39,4 +39,16 @@ public class Thermostat extends Device{
             setStatus(status);
         }
     }
+
+    public void printInfo(){
+        String status1;
+        if(status == false){
+            status1 = "off";
+        }
+        else if (status == true){
+            status1 = "on";
+        } else return;
+
+        System.out.println("light: <" + name + "> <" + status1 + "> <" + temperature + ">C <" + protocol + ">");
+    }
 }
