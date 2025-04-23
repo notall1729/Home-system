@@ -4,7 +4,7 @@ import java.util.*;
 
 public class SmartHomeSystem {
     private Map<String, Device> devices = new LinkedHashMap<>();
-    private List<String> rules = new ArrayList<>();
+    private List<AutomationRule> rules = new ArrayList<>();
 
     public void addDevice(String type, String name, String protocol){
         if(devices.containsKey(name)){
@@ -70,6 +70,11 @@ public class SmartHomeSystem {
        }
 
        devices.remove(name);
+       for (AutomationRule rule : rules){
+           if(rule.getName().equals(name)){
+               rules.remove(rule);
+           }
+       }
        System.out.println("device removed successfully");
     }
 
@@ -88,6 +93,54 @@ public class SmartHomeSystem {
                     Thermostat thermostat = (Thermostat) device;
                     thermostat.printInfo();
                 }
+            }
+        }
+    }
+
+    public void addRule(String name, String time, String action){
+        if(devices.containsKey(name)){
+            throw new InvalidCommandException("device not found");
+        }
+
+        if(isValidTimeFormat(time)){
+            throw new InvalidCommandException("invalid time");
+        }
+
+        if (!action.equals("on") && !action.equals("off")){
+            throw new InvalidCommandException("invalid action");
+        }
+
+        AutomationRule rule = new AutomationRule(name, time, action);
+        if(rules.contains(rule)){
+            throw new InvalidCommandException("duplicate rule");
+        }
+
+        rules.add(rule);
+    }
+
+    private boolean isValidTimeFormat(String time) {
+        if (!time.matches("^([01]\\d|2[0-3]):[0-5]\\d$")) {
+            return false;
+        }
+        return true;
+    }
+
+    public void checkRules(String time) {
+        for (AutomationRule rule : rules) {
+            if (rule.getTime().equals(time)) {
+                setDevice(rule.getName(), "status", rule.getAction());
+            }
+        }
+        System.out.println("rules checked");
+    }
+
+    public void listRules(){
+        if(rules == null){
+            System.out.println();
+        }
+        else {
+            for (AutomationRule automationRule : rules){
+                automationRule.printRule();
             }
         }
     }
