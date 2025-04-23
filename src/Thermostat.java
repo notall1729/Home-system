@@ -1,7 +1,7 @@
 import exception.InvalidCommandException;
 
 public class Thermostat extends Device{
-    private int temperature;
+    private int temperature = 20;
 
     public Thermostat(String name, String protocol, boolean status){
         super(name, protocol, status);

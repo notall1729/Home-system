@@ -1,7 +1,7 @@
 import exception.InvalidCommandException;
 
 public class Light extends Device{
-    private int brightness;
+    private int brightness = 50;
 
     public Light(String name, String protocol, boolean status){
         super(name, protocol, status);
