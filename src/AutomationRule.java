@@ -25,4 +25,8 @@ public class AutomationRule {
     public String toString(){
         return name + " " + time + " " + action;
     }
+
+    public void printRule(){
+        System.out.println("<" + name + "> <" + time + "> <" + action + ">");
+    }
 }
