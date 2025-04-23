@@ -3,6 +3,10 @@ import exception.InvalidCommandException;
 public class Thermostat extends Device{
     private int temperature;
 
+    public Thermostat(String name, String protocol, boolean status){
+        super(name, protocol, status);
+    }
+
     public void setTemperature(int temperature) {
         if(temperature > 30 || temperature < 10){
             throw new InvalidCommandException("invalid value");
