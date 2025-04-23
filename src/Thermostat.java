@@ -1,5 +1,3 @@
-import exception.InvalidCommandException;
-
 public class Thermostat extends Device implements HomeSystem {
     private int temperature = 20;
 
@@ -8,24 +6,23 @@ public class Thermostat extends Device implements HomeSystem {
     }
 
     public void setTemperature(int temperature) {
-        if(temperature > 30 || temperature < 10){
-            throw new InvalidCommandException("invalid value");
+        if (temperature > 30 || temperature < 10) {
+            System.out.println("invalid value");
+        } else {
+            this.temperature = temperature;
+            System.out.println("device update successfully");
         }
-        this.temperature = temperature;
-        System.out.println("device update successfully");
     }
 
     @Override
     public void setProperty(String property, String value){
-        if(property.equals("temperature")){
+        if (property.equals("brightness")){
+            System.out.println("invalid property");
+        }
+       else if(property.equals("temperature")){
             setTemperature(Integer.parseInt(value));
         }
-
-        if (property.equals("brightness")){
-            throw new InvalidCommandException("invalid property");
-        }
-
-        if (property.equals("status")){
+        else if (property.equals("status")){
             int status;
             if(value.equals("on")){
                 status = 1;

@@ -1,5 +1,3 @@
-import exception.InvalidCommandException;
-
 public class Light extends Device implements HomeSystem {
     private int brightness = 50;
 
@@ -8,11 +6,12 @@ public class Light extends Device implements HomeSystem {
     }
 
     public void setBrightness(int brightness) {
-        if(brightness < 0 || brightness > 100){
-            throw new InvalidCommandException("invalid value");
+        if (brightness < 0 || brightness > 100) {
+            System.out.println("invalid value");
+        } else {
+            this.brightness = brightness;
+            System.out.println("device update successfully");
         }
-        this.brightness = brightness;
-        System.out.println("device update successfully");
     }
 
     @Override
@@ -22,10 +21,10 @@ public class Light extends Device implements HomeSystem {
         }
 
         if (property.equals("temperature")){
-            throw new InvalidCommandException("invalid property");
+            System.out.println("invalid property");
         }
 
-        if (property.equals("status")){
+        else if (property.equals("status")){
             int status;
             if(value.equals("on")){
                 status = 1;

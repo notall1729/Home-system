@@ -1,5 +1,3 @@
-
-import exception.InvalidCommandException;
 import rule.AutomationRule;
 
 import java.util.*;
@@ -10,65 +8,60 @@ public class SmartHomeSystem {
 
     public void addDevice(String type, String name, String protocol){
         if(devices.containsKey(name)){
-            throw new InvalidCommandException("duplicsted device name");
-        }
-
-        Device device;
-        if(type.equals("light")){
-            device = new Light(name, protocol, false);
-        } else if(type.equals("thermostat")){
-            device = new Thermostat(name, protocol, false);
-        } else {
-            throw new InvalidCommandException("invalid input");
-        }
-
-        devices.put(name, device);
-        System.out.println("device added successfully");
-    }
-
-    public void setDevice(String name, String property, String value){
-        if(!(devices.containsKey(name))){
-            throw new InvalidCommandException("device not found");
-        }
-
-        Device device = devices.get(name);
-        if(property.equals("status")){
-            if(value.equals("on")){
-                device.status = true;
-            }
-            else if(value.equals("off")){
-                device.status = false;
-            }
-            else{
-                throw new InvalidCommandException("invalid value");
-            }
-        }
-        else if(property.equals("brightness")){
-            if(devices instanceof Thermostat){
-                throw new InvalidCommandException("invalid property");
-            }
-            else{
-                Light light = (Light) device;
-               light.setBrightness(Integer.parseInt(value));
-            }
-        }
-        else if(property.equals("temperature")){
-            if(device instanceof Light){
-                throw new InvalidCommandException("invalid property");
-            }
-            else {
-                Thermostat thermostat = (Thermostat) device;
-                thermostat.setTemperature(Integer.parseInt(value));
-            }
+            System.out.println("duplicsted device name");
         }
         else {
-            throw new InvalidCommandException("invalid property");
+            Device device;
+            if (type.equals("light")) {
+                device = new Light(name, protocol, false);
+                devices.put(name, device);
+                System.out.println("device added successfully");
+            } else if (type.equals("thermostat")) {
+                device = new Thermostat(name, protocol, false);
+                devices.put(name, device);
+                System.out.println("device added successfully");
+            } else {
+                System.out.println("invalid input");
+            }
+        }
+    }
+
+    public void setDevice(String name, String property, String value) {
+        if (!(devices.containsKey(name))) {
+            System.out.println("device not found");
+        } else {
+            Device device = devices.get(name);
+            if (property.equals("status")) {
+                if (value.equals("on")) {
+                    device.status = true;
+                } else if (value.equals("off")) {
+                    device.status = false;
+                } else {
+                    System.out.println("invalid value");
+                }
+            } else if (property.equals("brightness")) {
+                if (devices instanceof Thermostat) {
+                    System.out.println("invalid property");
+                } else {
+                    Light light = (Light) device;
+                    light.setBrightness(Integer.parseInt(value));
+                }
+            } else if (property.equals("temperature")) {
+                if (device instanceof Light) {
+                    System.out.println("invalid property");
+                } else {
+                    Thermostat thermostat = (Thermostat) device;
+                    thermostat.setTemperature(Integer.parseInt(value));
+                }
+            } else {
+                System.out.println("invalid property");
+            }
         }
     }
 
     public void revomeDevice(String name){
        if(!(devices.containsKey(name))){
-           throw new InvalidCommandException("device not found");
+           System.out.println("device not found");
        }
 
        devices.remove(name);
@@ -101,23 +94,25 @@ public class SmartHomeSystem {
 
     public void addRule(String name, String time, String action){
         if(devices.containsKey(name)){
-            throw new InvalidCommandException("device not found");
+            System.out.println("device not found");
         }
 
         if(isValidTimeFormat(time)){
-            throw new InvalidCommandException("invalid time");
+            System.out.println("invalid time");
         }
 
         if (!action.equals("on") && !action.equals("off")){
-            throw new InvalidCommandException("invalid action");
+            System.out.println("invalid action");
         }
 
         AutomationRule rule = new AutomationRule(name, time, action);
         if(rules.contains(rule)){
-            throw new InvalidCommandException("duplicate rule");
+            System.out.println("duplicate rule");
         }
-
-        rules.add(rule);
+        else {
+            rules.add(rule);
+            System.out.println("rule added successfully");
+        }
     }
 
     private boolean isValidTimeFormat(String time) {

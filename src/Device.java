@@ -1,5 +1,3 @@
-import exception.InvalidCommandException;
-
 public class Device {
     protected String name;
     protected String protocol;
@@ -13,13 +11,13 @@ public class Device {
 
     public void setStatus(int status) {
         if (status != 0 && status != 1){
-            throw new InvalidCommandException("invalid status");
+            System.out.println("invalid status");
         }
-        if(status == 1) {
+       else if(status == 1) {
             this.status = true;
             System.out.println("device update successfully");
         }
-        if (status == 0){
+        else if (status == 0){
             this.status = false;
             System.out.println("device update successfully");
         }
