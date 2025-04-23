@@ -1,3 +1,5 @@
+package rule;
+
 public class AutomationRule {
     private String name;
     private String time;

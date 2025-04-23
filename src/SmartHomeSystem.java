@@ -1,4 +1,6 @@
+
 import exception.InvalidCommandException;
+import rule.AutomationRule;
 
 import java.util.*;
 
@@ -83,7 +85,7 @@ public class SmartHomeSystem {
             System.out.println();
         }
         else {
-            for (Device device : devices){
+            for (Device device : devices.values()){
                 if (device instanceof Light){
                     Light light = (Light) device;
                     light.printInfo();

@@ -1,7 +1,5 @@
 import exception.InvalidCommandException;
 
-import java.util.*;
-
 public class Device {
     protected String name;
     protected String protocol;

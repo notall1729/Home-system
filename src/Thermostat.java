@@ -1,6 +1,6 @@
 import exception.InvalidCommandException;
 
-public class Thermostat extends Device{
+public class Thermostat extends Device implements HomeSystem {
     private int temperature = 20;
 
     public Thermostat(String name, String protocol, boolean status){
@@ -15,7 +15,8 @@ public class Thermostat extends Device{
         System.out.println("device update successfully");
     }
 
-    private void setProperty(String property, String value){
+    @Override
+    public void setProperty(String property, String value){
         if(property.equals("temperature")){
             setTemperature(Integer.parseInt(value));
         }
@@ -40,6 +41,7 @@ public class Thermostat extends Device{
         }
     }
 
+    @Override
     public void printInfo(){
         String status1;
         if(status == false){

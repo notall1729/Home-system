@@ -1,6 +1,6 @@
 import exception.InvalidCommandException;
 
-public class Light extends Device{
+public class Light extends Device implements HomeSystem {
     private int brightness = 50;
 
     public Light(String name, String protocol, boolean status){
@@ -15,7 +15,8 @@ public class Light extends Device{
         System.out.println("device update successfully");
     }
 
-    private void setProperty(String property, String value){
+    @Override
+    public void setProperty(String property, String value){
         if(property.equals("brightness")){
             setBrightness(Integer.parseInt(value));
         }
@@ -40,6 +41,7 @@ public class Light extends Device{
         }
     }
 
+    @Override
     public void printInfo(){
         String status1;
         if(status == false){
