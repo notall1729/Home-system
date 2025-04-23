@@ -72,4 +72,23 @@ public class SmartHomeSystem {
        devices.remove(name);
        System.out.println("device removed successfully");
     }
+
+    public void listDevice(){
+        if(devices == null){
+            System.out.println();
+        }
+        else {
+            for (Device device : devices){
+                if (device instanceof Light){
+                    Light light = (Light) device;
+                    light.printInfo();
+                }
+
+                if (device instanceof Thermostat){
+                    Thermostat thermostat = (Thermostat) device;
+                    thermostat.printInfo();
+                }
+            }
+        }
+    }
 }
