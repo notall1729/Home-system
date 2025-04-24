@@ -29,6 +29,6 @@ public class AutomationRule {
     }
 
     public void printRule(){
-        System.out.println("<" + name + "> <" + time + "> <" + action + ">");
+        System.out.println(name + " " + time + " " + action);
     }
 }

@@ -40,14 +40,11 @@ public class Thermostat extends Device implements HomeSystem {
 
     @Override
     public void printInfo(){
-        String status1;
-        if(status == false){
-            status1 = "off";
-        }
-        else if (status == true){
+        String status1 = "off";
+         if (status){
             status1 = "on";
-        } else return;
+        }
 
-        System.out.println("light: <" + name + "> <" + status1 + "> <" + temperature + ">C <" + protocol + ">");
+        System.out.println("thermostat: " + name + " " + status1 + " " + temperature + "C " + protocol);
     }
 }

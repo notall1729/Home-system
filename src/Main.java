@@ -8,9 +8,14 @@ public class Main {
         int q = scanner.nextInt();
         String[] commands = new String[q];
 
+        scanner.nextLine();
+
         for (int i = 0; i < q; ++ i){
             commands[i] = scanner.nextLine();
         }
+
+        System.out.println();
+        System.out.println();
 
         for (int i = 0; i < q; ++ i){
          String command = commands[i];
@@ -43,6 +48,8 @@ public class Main {
              case "list_rules":
                  homeSystem.listRules();
                  break;
+
+             default: System.out.println("Error");
          }
         }
     }

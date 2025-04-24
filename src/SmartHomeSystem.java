@@ -4,22 +4,34 @@ import java.util.*;
 
 public class SmartHomeSystem {
     private Map<String, Device> devices = new LinkedHashMap<>();
-    private List<AutomationRule> rules = new ArrayList<>();
+    private ArrayList<AutomationRule> rules = new ArrayList<>();
 
-    public void addDevice(String type, String name, String protocol){
-        if(devices.containsKey(name)){
+    public void addDevice(String type, String name, String protocol) {
+        if (devices.containsKey(name)) {
             System.out.println("duplicsted device name");
-        }
-        else {
+        } else {
             Device device;
             if (type.equals("light")) {
-                device = new Light(name, protocol, false);
-                devices.put(name, device);
-                System.out.println("device added successfully");
+                if (protocol.equals("WiFi")) {
+                    device = new Light(name, "WiFi", false);
+                    devices.put(name, device);
+                    System.out.println("device added successfully");
+                } else if (protocol.equals("Bluetooth")) {
+                    device = new Light(name, "Bluetooth", false);
+                    devices.put(name, device);
+                    System.out.println("device added successfully");
+                } else System.out.println("invalid input");
+
             } else if (type.equals("thermostat")) {
-                device = new Thermostat(name, protocol, false);
-                devices.put(name, device);
-                System.out.println("device added successfully");
+                if (protocol.equals("WiFi")) {
+                    device = new Thermostat(name, "WiFi", false);
+                    devices.put(name, device);
+                    System.out.println("device added successfully");
+                } else if (protocol.equals("Bluetooth")) {
+                    device = new Thermostat(name, "Bluetooth", false);
+                    devices.put(name, device);
+                    System.out.println("device added successfully");
+                } else System.out.println("invalid input");
             } else {
                 System.out.println("invalid input");
             }
@@ -40,7 +52,7 @@ public class SmartHomeSystem {
                     System.out.println("invalid value");
                 }
             } else if (property.equals("brightness")) {
-                if (devices instanceof Thermostat) {
+                if (device instanceof Thermostat) {
                     System.out.println("invalid property");
                 } else {
                     Light light = (Light) device;
@@ -59,57 +71,54 @@ public class SmartHomeSystem {
         }
     }
 
-    public void revomeDevice(String name){
-       if(!(devices.containsKey(name))){
-           System.out.println("device not found");
-       }
+    public void revomeDevice(String name) {
+        if (!(devices.containsKey(name))) {
+            System.out.println("device not found");
+        }
 
-       devices.remove(name);
-       for (AutomationRule rule : rules){
-           if(rule.getName().equals(name)){
-               rules.remove(rule);
-           }
-       }
-       System.out.println("device removed successfully");
+        devices.remove(name);
+        for (int i = 0; i < rules.size(); ++i) {
+            if (rules.get(i).getName().equals(name)) {
+                rules.remove(rules.get(i));
+            }
+        }
+        System.out.println("device removed successfully");
     }
 
-    public void listDevice(){
-        if(devices == null){
+    public void listDevice() {
+        if (devices.isEmpty()) {
             System.out.println();
         }
-        else {
-            for (Device device : devices.values()){
-                if (device instanceof Light){
-                    Light light = (Light) device;
-                    light.printInfo();
-                }
 
-                if (device instanceof Thermostat){
-                    Thermostat thermostat = (Thermostat) device;
-                    thermostat.printInfo();
-                }
+        for (Device device : devices.values()) {
+            if (device instanceof Light) {
+                Light light = (Light) device;
+                light.printInfo();
+            }
+            if (device instanceof Thermostat) {
+                Thermostat thermostat = (Thermostat) device;
+                thermostat.printInfo();
             }
         }
     }
 
-    public void addRule(String name, String time, String action){
-        if(devices.containsKey(name)){
+    public void addRule(String name, String time, String action) {
+        if (!(devices.containsKey(name))) {
             System.out.println("device not found");
         }
 
-        if(isValidTimeFormat(time)){
+        if (!(isValidTimeFormat(time))) {
             System.out.println("invalid time");
         }
 
-        if (!action.equals("on") && !action.equals("off")){
+        if (!action.equals("on") && !action.equals("off")) {
             System.out.println("invalid action");
         }
 
         AutomationRule rule = new AutomationRule(name, time, action);
-        if(rules.contains(rule)){
+        if (rules.contains(rule)) {
             System.out.println("duplicate rule");
-        }
-        else {
+        } else {
             rules.add(rule);
             System.out.println("rule added successfully");
         }
@@ -131,14 +140,14 @@ public class SmartHomeSystem {
         System.out.println("rules checked");
     }
 
-    public void listRules(){
-        if(rules == null){
-            System.out.println();
-        }
-        else {
-            for (AutomationRule automationRule : rules){
-                automationRule.printRule();
+        public void listRules () {
+            if (rules.isEmpty()) {
+                System.out.println();
+            } else {
+                for (AutomationRule automationRule : rules) {
+                    automationRule.printRule();
+                }
             }
         }
     }
-}
+

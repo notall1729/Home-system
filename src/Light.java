@@ -42,14 +42,11 @@ public class Light extends Device implements HomeSystem {
 
     @Override
     public void printInfo(){
-        String status1;
-        if(status == false){
-            status1 = "off";
-        }
-        else if (status == true){
+        String status1 = "off";
+        if (status){
             status1 = "on";
-        } else return;
+        }
 
-        System.out.println("light: <" + name + "> <" + status1 + "> <" + brightness + ">% <" + protocol + ">");
+        System.out.println("light: " + name + " " + status1 + " " + brightness + "% " + protocol);
     }
 }
